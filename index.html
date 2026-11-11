@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI-NAS Organizer Demo</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      background: #f5f7fa;
+      color: #333;
+    }
+    h1 {
+      color: #2c5282;
+      text-align: center;
+      margin-bottom: 30px;
+      border-bottom: 3px solid #3182ce;
+      padding-bottom: 10px;
+    }
+    .demo-container {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      padding: 25px;
+      margin-bottom: 20px;
+    }
+    .input-group {
+      margin-bottom: 15px;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 600;
+      color: #2c5282;
+    }
+    input[type="text"], select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 16px;
+    }
+    button {
+      background: #3182ce;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 600;
+      transition: background 0.3s;
+      margin-top: 10px;
+    }
+    button:hover {
+      background: #2b6cb0;
+    }
+    .result {
+      margin-top: 20px;
+      padding: 15px;
+      border-radius: 8px;
+      background: #e6f7ff;
+      display: none;
+    }
+    .result h3 {
+      margin-top: 0;
+      color: #1a365d;
+    }
+    .result p {
+      margin: 5px 0;
+      line-height: 1.5;
+    }
+    .tag {
+      display: inline-block;
+      background: #e6f7ff;
+      color: #1a365d;
+      padding: 5px 10px;
+      border-radius: 20px;
+      margin: 3px;
+      font-size: 14px;
+      font-weight: 500;
+    }
+    .status {
+      margin-top: 15px;
+      font-size: 14px;
+      color: #4a5568;
+      text-align: center;
+    }
+    .info-box {
+      background: #f0f8ff;
+      border-left: 4px solid #3182ce;
+      padding: 15px;
+      margin: 20px 0;
+      border-radius: 6px;
+    }
+    .info-box h4 {
+      margin-top: 0;
+      color: #2c5282;
+    }
+    .demo-notice {
+      background: #fff8e1;
+      border: 1px solid #fbc02d;
+      padding: 15px;
+      border-radius: 8px;
+      margin-top: 20px;
+      font-size: 14px;
+    }
+    .demo-notice strong {
+      color: #d33;
+    }
+  </style>
+</head>
+<body>
+  <h1>AI-NAS Organizer Demo</h1>
+  
+  <div class="info-box">
+    <h4>What This Demo Shows</h4>
+    <p>This is a simulated demonstration of the AI-NAS Organizer skill. It shows how a file would be processed to extract metadata, generate a summary, and apply intelligent tags using AI.</p>
+  </div>
+
+  <div class="demo-container">
+    <div class="input-group">
+      <label for="fileType">File Type</label>
+      <select id="fileType">
+        <option value="photo">Photo</option>
+        <option value="video">Video</option>
+        <option value="document">Document</option>
+      </select>
+    </div>
+    
+    <div class="input-group">
+      <label for="fileName">File Name</label>
+      <input type="text" id="fileName" placeholder="e.g., hiking_trip_2026.mp4">
+    </div>
+    
+    <button id="processBtn">Process File</button>
+    
+    <div id="result" class="result">
+      <h3>Processed File</h3>
+      <p><strong>Metadata:</strong> <span id="metadata"></span></p>
+      <p><strong>Summary:</strong> <span id="summary"></span></p>
+      <p><strong>Tags:</strong> <span id="tags"></span></p>
+    </div>
+    
+    <div class="status" id="status"></div>
+  </div>
+
+  <div class="demo-notice">
+    <strong>Note:</strong> This is a simulated demo. The actual AI-NAS Organizer skill would integrate with UGREEN AI NAS hardware and use real AI models to process files. The results shown here are generated using placeholder data to demonstrate the concept.
+  </div>
+
+  <script>
+    // Simulated AI processing function
+    function processFile(fileType, fileName) {
+      // Simulate processing delay
+      return new Promise(resolve => {
+        setTimeout(() => {
+          // Generate metadata based on file type
+          const date = new Date().toISOString().split('T')[0];
+          const size = Math.floor(Math.random() * 1000) + 100;
+          const format = fileType === 'photo' ? 'jpg' : fileType === 'video' ? 'mp4' : 'pdf';
+          
+          // Generate summary based on file type and name
+          let summary = '';
+          if (fileType === 'photo') {
+            summary = `A photo taken on ${date} showing a scenic landscape with mountains in the background.`;
+          } else if (fileType === 'video') {
+            summary = `A video recording of a hiking trip in the mountains, capturing beautiful natural scenery.`;
+          } else {
+            summary = `A document containing information about AI-NAS Organizer, a skill that automates file organization.`;
+          }
+          
+          // Generate tags based on file type and name
+          let tags = [];
+          if (fileType === 'photo') {
+            tags = ['landscape', 'mountains', 'outdoor', 'nature', 'scenic'];
+          } else if (fileType === 'video') {
+            tags = ['hiking', 'mountains', 'adventure', 'outdoor', 'nature'];
+          } else {
+            tags = ['AI', 'NAS', 'organization', 'technology', 'automation'];
+          }
+          
+          // Add file name to tags if it's relevant
+          if (fileName.toLowerCase().includes('hiking') || fileName.toLowerCase().includes('mountain')) {
+            tags.push('hiking');
+            tags.push('mountain');
+          }
+          
+          // Return processed result
+          resolve({
+            metadata: { date, size: `${size}MB`, format },
+            summary,
+            tags
+          });
+        }, 1500);
+      });
+    }
+
+    // Handle button click
+    document.getElementById('processBtn').addEventListener('click', async () => {
+      const fileType = document.getElementById('fileType').value;
+      const fileName = document.getElementById('fileName').value.trim();
+      
+      if (!fileName) {
+        alert('Please enter a file name');
+        return;
+      }
+      
+      // Show loading status
+      document.getElementById('status').textContent = 'Processing file...';
+      document.getElementById('result').style.display = 'none';
+      
+      try {
+        const result = await processFile(fileType, fileName);
+        
+        // Update UI with results
+        document.getElementById('metadata').textContent = `Date: ${result.metadata.date}, Size: ${result.metadata.size}, Format: ${result.metadata.format}`;
+        document.getElementById('summary').textContent = result.summary;
+        
+        const tagsElement = document.getElementById('tags');
+        tagsElement.innerHTML = '';
+        result.tags.forEach(tag => {
+          const tagSpan = document.createElement('span');
+          tagSpan.className = 'tag';
+          tagSpan.textContent = tag;
+          tagsElement.appendChild(tagSpan);
+        });
+        
+        // Show result
+        document.getElementById('result').style.display = 'block';
+        document.getElementById('status').textContent = 'File processed successfully!';
+      } catch (error) {
+        document.getElementById('status').textContent = 'Error processing file. Please try again.';
+      }
+    });
+  </script>
+</body>
+</html>
